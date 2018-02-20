@@ -4,6 +4,7 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
+
 public class Controller {
     public static void main(String[] args) throws Exception {
         String crawlStorageFolder = "/data/crawl/root";
@@ -39,8 +40,9 @@ public class Controller {
          *
          * Uncomment corresponding lines if need to be used
          */
-//        controller.start(FetchCrawler.class, numberOfCrawlers);
-        controller.start(VisitCrawler.class, numberOfCrawlers);
+//        controller.start(FetchCrawler.class, numberOfCrawlers); // Fetch
+//        controller.start(VisitCrawler.class, numberOfCrawlers);  // Visit
+//        controller.start(UrlsCrawler.class, numberOfCrawlers);  // All Urls
 
         CSVWriter csvWriter = CSVWriter.getInstance();
         csvWriter.flush();

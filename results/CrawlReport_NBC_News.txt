@@ -1,0 +1,39 @@
+Name: Yixiang Ding
+USC ID: 1068351563
+News site crawled: nbcnews.com
+
+Fetch Statistics:
+================
+# fetches attempted: 20000
+# fetches succeeded: 15410
+# fetches aborted/failed: 4590
+
+Outgoing URLs:
+================
+Total URLs extracted: 604306
+# unique URLs extracted: 137276
+# unique URLs within News Site: 34898
+# unique URLs outside News Site: 569408
+
+Status Codes:
+================
+200 OK: 15410
+410 Gone: 70
+301 Moved Permanently: 4147
+500 Internal Server Error: 20
+302 Moved Temporarily: 54
+404 Not Found: 299
+
+File Sizes:
+================
+< 1KB: 7
+1KB ~ <10KB: 19
+10KB ~ <100KB: 10988
+100KB ~ <1MB: 4284
+>= 1MB: 44
+
+Content Types:
+================
+image/png: 10
+text/html: 15331
+image/vnd.microsoft.icon: 1

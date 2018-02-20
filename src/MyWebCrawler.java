@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 public class MyWebCrawler extends WebCrawler {
-    private List<String> supportedContentTypes = null;
 
-    @Override
-    public void onStart() {
-        supportedContentTypes = new ArrayList<>(Arrays.asList("html", "msword", "pdf",
-                "gif", "jpg", "jpeg", "png", "bmp", "svg"));
-    }
+    private static int pageNumberCounter = 0;
+    private static int visitedNumberCounter = 0;
+    protected static final List<String> supportedContentTypes = new ArrayList<>(Arrays.asList("text/html", "application/msword", "text/pdf", "image/"));;
 
     /**
      * This method receives two parameters. The first parameter is the page
@@ -29,13 +26,20 @@ public class MyWebCrawler extends WebCrawler {
      */
     @Override
     public boolean shouldVisit(Page referringPage, WebURL url) {
+//        System.out.print("# Crawled Pages: " + ++pageNumberCounter);
+
         String loweredUrl = url.getURL().toLowerCase();
-        boolean underSameDomain =  loweredUrl.startsWith("http://www.nbcnews.com/") || loweredUrl.startsWith("https://www.nbcnews.com/");
-        if (!underSameDomain) return false;
+        boolean isUnderSameDomain =  loweredUrl.startsWith("http://www.nbcnews.com/") ||
+                loweredUrl.startsWith("https://www.nbcnews.com/") ||
+                loweredUrl.startsWith("http://nbcnews.com/") ||
+                loweredUrl.startsWith("https://nbcnews.com/");
+        if (!isUnderSameDomain) return false;
+
         for (String contentType : supportedContentTypes) {
             if (referringPage.getContentType() == null) break;
             if (referringPage.getContentType().contains(contentType)) return true;
         }
+
         return false;
     }
 
@@ -45,19 +49,24 @@ public class MyWebCrawler extends WebCrawler {
      */
     @Override
     public void visit(Page page) {
-        String url = page.getWebURL().getURL();
-        System.out.println("URL: " + url);
+        printPageInfo(page);
+        System.out.println("# Visited: " + ++visitedNumberCounter);
+    }
 
-        if (page.getParseData() instanceof HtmlParseData) {
-            HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-            String text = htmlParseData.getText();
-            String html = htmlParseData.getHtml();
-            Set<WebURL> links = htmlParseData.getOutgoingUrls();
-
-            System.out.println("Text length: " + text.length());
-            System.out.println("Html length: " + html.length());
-            System.out.println("Number of outgoing links: " + links.size());
-
-        }
+    private void printPageInfo(Page page) {
+//        String url = page.getWebURL().getURL();
+//        System.out.println("URL: " + url);
+//
+//        if (page.getParseData() instanceof HtmlParseData) {
+//            HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
+//            String text = htmlParseData.getText();
+//            String html = htmlParseData.getHtml();
+//            Set<WebURL> links = htmlParseData.getOutgoingUrls();
+//
+//            System.out.println("Text length: " + text.length());
+//            System.out.println("Html length: " + html.length());
+//            System.out.println("Number of outgoing links: " + links.size());
+//
+//        }
     }
 }

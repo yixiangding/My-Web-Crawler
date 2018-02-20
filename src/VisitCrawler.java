@@ -4,10 +4,20 @@ import edu.uci.ics.crawler4j.url.WebURL;
 public class VisitCrawler extends MyWebCrawler {
     @Override
     public void visit(Page page) {
-        CSVWriter write = CSVWriter.getInstance("visit_NBC_News.txt", true);
+        if (page.getContentType().contains("application/") ||
+                page.getContentType().contains("css") ||
+                page.getContentType().contains("javascript")) return;
+        CSVWriter writer = CSVWriter.getInstance("visit_NBC_News.csv", true);
+        String[] visitedPageInfo = populatePageInfo(page);
+        writer.writeLine(visitedPageInfo);
+
+        super.visit(page); // Print visit info
+    }
+
+    private String[] populatePageInfo(Page page) {
         String[] visitedPageInfo = new String[4];
         visitedPageInfo[0] = page.getWebURL().getURL();
-        visitedPageInfo[1] = page.getStatusCode() + "";
+        visitedPageInfo[1] = page.getContentData().length / 1024 + " kb";
         visitedPageInfo[2] = page.getParseData().getOutgoingUrls().size() + "";
         String contentType = page.getContentType();
         // Trim off useless part like "charset=utf-8"
@@ -15,6 +25,7 @@ public class VisitCrawler extends MyWebCrawler {
             contentType = contentType.substring(0, contentType.indexOf(";"));
         }
         visitedPageInfo[3] = contentType;
-        write.writeLine(visitedPageInfo);
+
+        return visitedPageInfo;
     }
 }

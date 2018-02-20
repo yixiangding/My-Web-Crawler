@@ -37,7 +37,7 @@ public class CSVWriter extends FileWriter{
         return writer;
     }
 
-    public void writeLine(String[] values) {
+    public synchronized void writeLine(String[] values) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < values.length; i++) {
             sb.append(values[i]);
